@@ -63,11 +63,11 @@ DockerHub Repositories
 
 All of these repositories are publicly available from dockerhub
 
-[dmlond/bwa_samtools_base](https://registry.hub.docker.com/u/dmlond/bwa_samtools_base)
-[dmlond/bwa_plasmodium_data](https://registry.hub.docker.com/u/dmlond/bwa_plasmodium_data)
-[dmlond/bwa_reference_volume](https://registry.hub.docker.com/u/dmlond/bwa_reference_volume)
-[dmlond/bwa_reference](https://registry.hub.docker.com/u/dmlond/bwa_reference)
-[dmlond/bwa_aligner](https://registry.hub.docker.com/u/dmlond/bwa_aligner)
+* [dmlond/bwa_samtools_base](https://registry.hub.docker.com/u/dmlond/bwa_samtools_base)
+* [dmlond/bwa_plasmodium_data](https://registry.hub.docker.com/u/dmlond/bwa_plasmodium_data)
+* [dmlond/bwa_reference_volume](https://registry.hub.docker.com/u/dmlond/bwa_reference_volume)
+* [dmlond/bwa_reference](https://registry.hub.docker.com/u/dmlond/bwa_reference)
+* [dmlond/bwa_aligner](https://registry.hub.docker.com/u/dmlond/bwa_aligner)
 
 Instead of building your own images using this repository, you can simply run the workflow with docker, and it will automatically pull down
 these images at run time.
