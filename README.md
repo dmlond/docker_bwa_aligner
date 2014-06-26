@@ -8,8 +8,9 @@ The basic parts of this system are:
 2. a reference volume which exports a dictory /bwa_indexed to other containers
 3. a docker containerized application which mounts the reference volume and
 downloads a publicly available fasta reference genome file into a subdirectory of /bwa_indexed
-named for a specific build.  This allows multiple builds of different genomes to be stored in the same
-reference contaier.
+named for a specific build, and then indexes the fasta file with bwa and samtools.  To save space
+the application can gzip the reference fasta before indexing it. Multiple builds of different genomes
+can be stored in the same reference container.
 4. a docker containerized application which mounts the data volume and reference volume, and
 runs an alignment on single-end or paired end reads in /data against a specific build and bwa indexed
 fasta file in /bwa_indexed to produce a sorted bam file named for the read (or the first paired read) in
