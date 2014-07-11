@@ -11,7 +11,9 @@ downloads a publicly available fasta reference genome file into a subdirectory o
 named for a specific build, and then indexes the fasta file with bwa and samtools.  To save space
 the application can gzip the reference fasta before indexing it. Multiple builds of different genomes
 can be stored in the same reference container.
-4. a docker containerized application which mounts the data volume and reference volume, and
+4. a docker containerized application which splits a large fastq file in the data volume into subset
+fastq files with a specified number of reads.
+5. a docker containerized application which mounts the data volume and reference volume, and
 runs an alignment on single-end or paired end reads in /data against a specific build and bwa indexed
 fasta file in /bwa_indexed to produce a sorted bam file named for the read (or the first paired read) in
 /data.
@@ -33,7 +35,7 @@ mkdir ~/archive
 sudo docker run –rm –volumes-from plasmodium_data -v /home/${USER}:/archive dmlond/bwa_samtools_base cp /data/ERR022523_1.fastq.gz.bam /archive/
 ```
 
-You can run the dmlond/bwa_reference and dmlond/bwa_aligner containers without arguments (or mounted volumes) to get a list of requirements
+You can run dmlond/split_raw, dmlond/bwa_reference and dmlond/bwa_aligner containers without arguments (or mounted volumes) to get a list of requirements
 
 ```bash
 sudo docker run dmlond/bwa_reference
@@ -50,11 +52,12 @@ sudo docker build -t dmlond/bwa_samtools_base docker_bwa_aligner/
 sudo docker build -t  dmlond/bwa_plasmodium_data docker_bwa_aligner/bwa_plasmodium_data
 sudo docker build -t dmlond/bwa_reference_volume docker_bwa_aligner/bwa_reference_volume
 sudo docker build -t dmlond/bwa_reference docker_bwa_aligner/bwa_reference
+sudo docker build -t dmlond/split_raw docker_bwa_aligner/split_raw
 sudo docker build -t dmlond/bwa_aligner docker_bwa_aligner/bwa_aligner
 ```
 
 It is possible to build these containers with a namespace other than dmlond. To do so, you will need
-to modify the Dockerfiles in bwa_reference and bwa_aligner and change 'FROM dmlond/bwa_samtools_base'
+to modify the Dockerfiles in split_raw, bwa_reference and bwa_aligner and change 'FROM dmlond/bwa_samtools_base'
 to the name of your bwa_samtools_base image.  All of the other containers can be built with different names
 without affecting the workflow.
 
@@ -67,6 +70,7 @@ All of these repositories are publicly available from dockerhub
 * [dmlond/bwa_plasmodium_data](https://registry.hub.docker.com/u/dmlond/bwa_plasmodium_data)
 * [dmlond/bwa_reference_volume](https://registry.hub.docker.com/u/dmlond/bwa_reference_volume)
 * [dmlond/bwa_reference](https://registry.hub.docker.com/u/dmlond/bwa_reference)
+* [dmlond/split_raw](https://registry.hub.docker.com/u/dmlond/split_raw)
 * [dmlond/bwa_aligner](https://registry.hub.docker.com/u/dmlond/bwa_aligner)
 
 Instead of building your own images using this repository, you can simply run the workflow with docker, and it will automatically pull down
