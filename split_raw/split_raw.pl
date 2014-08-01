@@ -11,15 +11,15 @@ my $usage = q|USAGE: sudo docker run dmlond/split_raw -f fastq_file [-s size] [-
      will be gzipped whether or not the input is gzipped.  It is highly recommended that the input be compressed.
  -t: if specified, sequence and corresponding quality are truncated to only the first bp basepairs
 
- This takes a fastq_file in /data, and splits it into gzipped subsets of size entries.  Each subset
- file is stored in /data, and named with the fastq_file name with _subset_number.extension.gz
+ This takes a fastq_file in /home/bwa_user/data, and splits it into gzipped subsets of size entries.  Each subset
+ file is stored in /home/bwa_user/data, and named with the fastq_file name with _subset_number.extension.gz
  appended.
- This container requires a volume to be mounted with a /data directory exported.  This can
+ This container requires a volume to be mounted with a /home/bwa_user/data directory exported.  This can
  be done with a host directory using the -v docker run flag, or with a data container using
  the --volumes-from container_name docker run flag.
 |;
 
-my $data = '/data';
+my $data = '/home/bwa_user/data';
 die $usage unless (-d $data);
 
 my $opt = {};
@@ -52,8 +52,8 @@ while (my $line = <$in_h>) {
         close $out_h;
         print File::Basename::basename($current_file_name)."\n";
         $fc++;
-	$current_file_name = "${prefix}_${fc}.${ext}.gz";
-	open($out_h, '|-', "gzip -c > ${current_file_name}") or die $!;
+	    $current_file_name = "${prefix}_${fc}.${ext}.gz";
+	    open($out_h, '|-', "gzip -c > ${current_file_name}") or die $!;
         $c = 0;
     }
     print $out_h $line;

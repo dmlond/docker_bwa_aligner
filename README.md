@@ -4,19 +4,19 @@ docker_bwa_aligner
 This is a proof of concept docker container based system to run a simple sequence alignment workflow.
 The basic parts of this system are:
 
-1. a data volume which exports a directory /data to other containers.
-2. a reference volume which exports a dictory /bwa_indexed to other containers
+1. a data volume which exports a directory /home/bwa_user/data to other containers.
+2. a reference volume which exports a dictory /home/bwa_user/bwa_indexed to other containers
 3. a docker containerized application which mounts the reference volume and
-downloads a publicly available fasta reference genome file into a subdirectory of /bwa_indexed
+downloads a publicly available fasta reference genome file into a subdirectory of /home/bwa_user/bwa_indexed
 named for a specific build, and then indexes the fasta file with bwa and samtools.  To save space
 the application can gzip the reference fasta before indexing it. Multiple builds of different genomes
 can be stored in the same reference container.
 4. a docker containerized application which splits a large fastq file in the data volume into subset
 fastq files with a specified number of reads.
 5. a docker containerized application which mounts the data volume and reference volume, and
-runs an alignment on single-end or paired end reads in /data against a specific build and bwa indexed
-fasta file in /bwa_indexed to produce a sorted bam file named for the read (or the first paired read) in
-/data.
+runs an alignment on single-end or paired end reads in /home/bwa_user/data against a specific build and bwa indexed
+fasta file in /home/bwa_user/bwa_indexed to produce a sorted bam file named for the read (or the first paired read) in
+/home/bwa_user/data.
 
 Running the workflow
 -
@@ -45,7 +45,7 @@ sudo docker logs $ID
 If the job finised successfully, you can pull the data to your host.
 ```bash
 mkdir ~/archive
-sudo docker run –-rm --volumes-from plasmodium_data -v /home/${USER}:/archive dmlond/bwa_samtools_base cp /data/ERR022523_1.fastq.gz.bam /archive/
+sudo docker run –-rm --volumes-from plasmodium_data -v /home/${USER}:/archive dmlond/bwa_samtools_base cp /home/bwa_user/data/ERR022523_1.fastq.gz.bam /archive/
 ```
 
 *Note, The above assumes you are running on a *nix host.  This is more challenging on Mac OSX due to the intervening boot2docker host, which requires that you first use standard ssh to access the boot2docker host to make the ~/archive directory, run the above, and then fetch (scp, rsync, etc) the ~/archive directory from the boot2docker host machine using standard ssh access.  Users familiar with virtualbox can find a way to modify the boot2docker image to mount local directories, but this is beyond the scope of this example.
