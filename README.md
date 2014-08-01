@@ -27,14 +27,14 @@ step discussed below.  If you do not build the containers manually, the docker s
 from the public Dockerhub repositories mentioned below (mac osx users with boot2docker do not need sudo).
 
 ```bash
-sudo docker run –name bwa_references dmlond/bwa_reference_volume
-sudo docker run -i –volumes-from bwa_references dmlond/bwa_reference -i pf3D7_v2.1.5 ftp://ftp.sanger.ac.uk/pub/pathogens/Plasmodium/falciparum/3D7/3D7.version2.1.5/Pf3D7_v2.1.5.fasta -z
-sudo docker run –name plasmodium_data dmlond/bwa_plasmodium_data
+sudo docker run -–name bwa_references dmlond/bwa_reference_volume
+sudo docker run -i -–volumes-from bwa_references dmlond/bwa_reference -i pf3D7_v2.1.5 ftp://ftp.sanger.ac.uk/pub/pathogens/Plasmodium/falciparum/3D7/3D7.version2.1.5/Pf3D7_v2.1.5.fasta -z
+sudo docker run –-name plasmodium_data dmlond/bwa_plasmodium_data
 ID=`sudo docker run -d --volumes-from bwa_references --volumes-from plasmodium_data dmlond/bwa_aligner -s ERR022523_1.fastq.gz -b pf3D7_v2.1.5 -R Pf3D7_v2.1.5.fasta.gz -p ERR022523_2.fastq.gz -o ERR022523_1_2.bam`
 ```
 The above will run for a few minutes.  You can monitor it using docker inspect on the ID (or at least the first few numbers of the ID as given in the output of docker ps).
 ```bash
-sudo docker inpsect $ID
+sudo docker inspect $ID
 ```
 
 If 'Running' is false, the job is done.  If 'ExitCode' is 0 it finished successfully, otherwise it finished with an error.  Either way, you can use docker logs to see the output from STDOUT and STDERR
