@@ -1,5 +1,8 @@
-FROM blalor/centos
+FROM centos:centos6
 MAINTAINER Darin London <darin.london@duke.edu>
 
-VOLUME ["/bwa_indexed"]
+RUN ["/usr/sbin/useradd", "bwa_user"]
+USER bwa_user
+RUN ["mkdir", "-p", "/home/bwa_user/bwa_indexed"]
+VOLUME ["/home/bwa_user/bwa_indexed"]
 CMD ["/bin/true"]
