@@ -4,5 +4,6 @@ MAINTAINER Darin London <darin.london@duke.edu>
 
 ADD bwa_aligner.pl /usr/local/bin/bwa_aligner.pl
 RUN ["chmod", "777", "/usr/local/bin/bwa_aligner.pl"]
+USER bwa_user
 ENTRYPOINT ["/usr/local/bin/bwa_aligner.pl"]
 

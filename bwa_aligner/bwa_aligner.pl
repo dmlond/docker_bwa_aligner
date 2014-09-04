@@ -8,22 +8,23 @@ my $usage = q|docker run {data_volume} {reference_volume} dmlond/bwa_aligner {op
 Aligns a fastq file, or set of paired end fastq files, to a reference genome using bwa
 and samtools to produce a sorted bam file.
 
-data_volume:  The container requires that the directory /data exist, and that all
-  file_names passed in with -s and -p be found in this directory.  This can be mounted
-  either with the -v or --volumes-from docker run directives.  If mounting a data
-  volume container, the container must specify /data as a VOLUME.  If mounting with
-  -v, use -v /path/to/hostdir:/data.
+data_volume:  The container requires that the directory /home/bwa_user/data exist, and
+  that all file_names passed in with -s and -p be found in this directory.  This can
+  be mounted either with the -v or --volumes-from docker run directives.  If mounting
+  a data volume container, the container must specify /data as a VOLUME.  If mounting
+  with -v, use -v /path/to/hostdir:/data.
   ** The aligner produces an sai file, final bam file, and many temporary bam files
   that are created by samtools when it sorts the final bam file in this directory, 
   so make sure there is enough storage space to handle this based on the size of the
   input files.
 
-reference_volume: The container requires that the directory /bwa_indexed exist, with
- a subdirectory named for the build specified with -b.  The reference file_name
- specified with -R must be found in /bwa_indexed/${build}/ along with all of the
- bwa index and samtools faidx index files.  This can be mounted either with
+reference_volume: The container requires that the directory /home/bwa_user/bwa_indexed
+ exist, with a subdirectory named for the build specified with -b.  The reference
+ file_name specified with -R must be found in /bwa_indexed/${build}/ along with all
+ of the bwa index and samtools faidx index files.  This can be mounted either with
  the -v or --volumes-from docker run directives.  If mounting a data volume
- container, the container must specify /bwa_indexed as a VOLUME.  If mounting with
+ container, the container must specify /home/bwa_user/bwa_indexed as a VOLUME, and
+ it must be owned by bwa_user user and bwa_user group.  If mounting with
  -v, use -v /path/to/hostdir:/bwa_indexed.
 
 options:
@@ -53,7 +54,7 @@ my $reference = $opt->{R} or die $usage;
 my $pair_seq = $opt->{p};
 my $final_bam_file = $opt->{o};
 
-my $raw_seq_path = "/data/${raw_seq}";
+my $raw_seq_path = "/home/bwa_user/data/${raw_seq}";
 unless (-f $raw_seq_path) {
   print STDERR "Cannot find ${raw_seq_path}\nPerhaps you need to include a DATA volume?\n";
   exit(1);
@@ -61,14 +62,14 @@ unless (-f $raw_seq_path) {
 
 my $pair_seq_path;
 if ($pair_seq) {
-  $pair_seq_path = "/data/${pair_seq}";
+  $pair_seq_path = "/home/bwa_user/data/${pair_seq}";
   unless (-f $pair_seq_path) {
     print STDERR "Paired end ${pair_seq_path} not found\n";
     exit(1);
   }
 }
 
-my $reference_path = "/bwa_indexed/${build}/${reference}";
+my $reference_path = "/home/bwa_user/bwa_indexed/${build}/${reference}";
 unless (-f $reference_path) {
   print STDERR "Cannot find ${reference_path}\nPerhaps you need to include a REFERENCE volume?\n";
   exit(1);
@@ -85,7 +86,7 @@ unless (-f "${reference_path}.fai") {
 }
 
 if ($final_bam_file) {
-  $final_bam_file = join('/', '/data', $final_bam_file);
+  $final_bam_file = join('/', '/home/bwa_user/data', $final_bam_file);
 } else {
   $final_bam_file = "${raw_seq_path}.bam";
 }
