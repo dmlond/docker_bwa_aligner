@@ -8,7 +8,6 @@ require 'spreadsheet_agent'
 )
 
 @runner.skip_entry do |entry|
-  $stderr.puts "CHECKING #{ entry.inspect }"
   if entry['ready'] == "1"
     if entry['bwa_aligner'].nil? || entry['bwa_aligner'].empty?
       false
