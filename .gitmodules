@@ -10,3 +10,6 @@
 [submodule "bwa_reference_volume"]
 	path = bwa_reference_volume
 	url = git@github.com:dmlond/bwa_reference_volume.git
+[submodule "bwa_reference"]
+	path = bwa_reference
+	url = git@github.com:dmlond/bwa_reference.git
