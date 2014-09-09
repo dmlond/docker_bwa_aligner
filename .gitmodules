@@ -13,3 +13,6 @@
 [submodule "bwa_reference"]
 	path = bwa_reference
 	url = git@github.com:dmlond/bwa_reference.git
+[submodule "google_agent_base"]
+	path = google_agent_base
+	url = https://github.com/dmlond/google_agent_base
