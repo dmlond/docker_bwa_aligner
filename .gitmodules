@@ -16,3 +16,6 @@
 [submodule "google_agent_base"]
 	path = google_agent_base
 	url = https://github.com/dmlond/google_agent_base
+[submodule "split_raw"]
+	path = split_raw
+	url = git@github.com:dmlond/split_raw.git
