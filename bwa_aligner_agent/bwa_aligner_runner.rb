@@ -42,7 +42,8 @@ while @concurrent_exceptions < @max_exceptions
       end
 
       @concurrent_exceptions = 0
-      sleep 31
+      sleep_between = [*5..10].sample
+      sleep sleep_between
     end
   rescue Exception => e
     $stderr.puts "EXCEPTION #{ e.message }"
