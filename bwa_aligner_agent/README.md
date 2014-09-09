@@ -2,7 +2,7 @@ bwa_aligner_agent
 ==================
 
 This is composed of both a dmlond/google_agent_base wrapper agent for
-dmlond/bwa_aligner_raw and a SpreadsheetAgent::Runner
+dmlond/bwa_aligner and a SpreadsheetAgent::Runner
 script which monitors the configured spreadsheet worksheet
 for new subsets that are ready to align, and runs the bwa_aligner_agent
 on them.
@@ -46,26 +46,26 @@ file is the same for both before building them.
 building dmlond/bwa_aligner_agent
 -
 
-To build dmlond/bwa_aligner_agent, you have to download dmlond/bwa_aligner_raw from Dockerhub, or build it
-from scratch.  If you download dmlond/bwa_aligner_raw, you can 'tag' it with the tag 'dmlond/google_agent_candidate'.
+To build dmlond/bwa_aligner_agent, you have to download dmlond/bwa_aligner from Dockerhub, or build it
+from scratch.  If you download dmlond/bwa_aligner you can 'tag' it with the tag 'dmlond/google_agent_candidate'.
 If you build it from scratch, you can either build it with '-t dmlond/google_agent_candidate'
-or build it with '-t dmlond/bwa_aligner_raw', and then tag it with 'dmlond/google_agent_candidate'.
+or build it with '-t dmlond/bwa_aligner', and then tag it with 'dmlond/google_agent_candidate'.
 Then build dmlond/google_agent_base to produce an image tagged 'dmlond/google_bwa_aligner_agent_candidate'
 Then you can build dmlond/bwa_aligner_agent.
 
-Here are the steps starting from a download of bwa_aligner_raw from the dockerhub.  When you
-run dmlond/bwa_aligner_raw, docker will download it from Dockerhub, and then it will run and print
-the usage instructions for bwa_aligner_raw.  It will then be available to tag appropriately.
+Here are the steps starting from a download of bwa_aligner from the dockerhub.  When you
+run dmlond/bwa_aligner, docker will download it from Dockerhub, and then it will run and print
+the usage instructions for bwa_aligner.  It will then be available to tag appropriately.
 
 ```bash
-$ sudo docker run dmlond/bwa_aligner_raw
-$ sudo docker tag dmlond/bwa_aligner_raw dmlond/google_agent_candidate
+$ sudo docker run dmlond/bwa_aligner
+$ sudo docker tag dmlond/bwa_aligner dmlond/google_agent_candidate
 $ sudo docker build -t dmlond/google_bwa_aligner_agent_candidate google_agent_base
 $ sudo docker build -t dmlond/bwa_aligner_agent bwa_aligner_agent
 ```
 
 You should consult the README for docker_bwa_aligner for instructions on how
-to build bwa_aligner_raw from scratch.
+to build bwa_aligner from scratch.
 
 running dmlond/bwa_aligner_agent
 -
