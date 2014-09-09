@@ -60,7 +60,7 @@ the usage instructions for bwa_aligner.  It will then be available to tag approp
 ```bash
 $ sudo docker run dmlond/bwa_aligner
 $ sudo docker tag dmlond/bwa_aligner dmlond/google_agent_candidate
-$ sudo docker build -t dmlond/google_bwa_aligner_agent_candidate google_agent_base
+$ sudo docker build -t dmlond/bwa_aligner_agent_candidate google_agent_base
 $ sudo docker build -t dmlond/bwa_aligner_agent bwa_aligner_agent
 ```
 
