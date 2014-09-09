@@ -19,3 +19,6 @@
 [submodule "split_raw"]
 	path = split_raw
 	url = git@github.com:dmlond/split_raw.git
+[submodule "split_agent"]
+	path = split_agent
+	url = git@github.com:dmlond/split_agent.git
