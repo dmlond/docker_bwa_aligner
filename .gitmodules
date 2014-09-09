@@ -1,0 +1,3 @@
+[submodule "bwa_aligner"]
+	path = bwa_aligner
+	url = git@github.com:dmlond/bwa_aligner.git
