@@ -4,3 +4,6 @@
 [submodule "bwa_aligner_agent"]
 	path = bwa_aligner_agent
 	url = git@github.com:dmlond/bwa_aligner_agent.git
+[submodule "bwa_plasmodium_data"]
+	path = bwa_plasmodium_data
+	url = git@github.com:dmlond/bwa_plasmodium_data.git
