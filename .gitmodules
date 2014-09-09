@@ -7,3 +7,6 @@
 [submodule "bwa_plasmodium_data"]
 	path = bwa_plasmodium_data
 	url = git@github.com:dmlond/bwa_plasmodium_data.git
+[submodule "bwa_reference_volume"]
+	path = bwa_reference_volume
+	url = git@github.com:dmlond/bwa_reference_volume.git
