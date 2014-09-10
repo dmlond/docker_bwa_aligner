@@ -22,3 +22,6 @@
 [submodule "split_agent"]
 	path = split_agent
 	url = git@github.com:dmlond/split_agent.git
+[submodule "bwa_samtools_base"]
+	path = bwa_samtools_base
+	url = git@github.com:dmlond/bwa_samtools_base.git
