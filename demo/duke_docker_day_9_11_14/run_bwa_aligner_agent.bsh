@@ -1,0 +1,3 @@
+#!/bin/bash
+# run with sudo if not on mac with boot2docker
+docker run -d --volumes-from plasmodium_data --volumes-from bwa_references dmlond/bwa_aligner_agent

@@ -1,0 +1,3 @@
+#!/bin/bash
+# run with sudo if not on mac with boot2docker
+docker run -d --volumes-from plasmodium_data dmlond/split_agent -f ERR022523_1.fastq.gz -z
