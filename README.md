@@ -63,7 +63,7 @@ To build your own version of these containers, you need to install docker.io, cl
 run the following commands (mac osx users with boot2docker do not need sudo):
 
 ```bash
-sudo docker build -t dmlond/bwa_samtools_base docker_bwa_aligner/
+sudo docker build -t dmlond/bwa_samtools_base docker_bwa_aligner/bwa_samtools_base
 sudo docker build -t  dmlond/bwa_plasmodium_data docker_bwa_aligner/bwa_plasmodium_data
 sudo docker build -t dmlond/bwa_reference_volume docker_bwa_aligner/bwa_reference_volume
 sudo docker build -t dmlond/bwa_reference docker_bwa_aligner/bwa_reference
