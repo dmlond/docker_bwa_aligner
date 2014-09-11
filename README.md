@@ -5,7 +5,7 @@ This is a proof of concept docker container based system to run a simple sequenc
 The basic parts of this system are:
 
 1. a data volume which exports a directory /home/bwa_user/data to other containers.
-2. a reference volume which exports a dictory /home/bwa_user/bwa_indexed to other containers
+2. a reference volume which exports a directory /home/bwa_user/bwa_indexed to other containers
 3. a docker containerized application which mounts the reference volume and
 downloads a publicly available fasta reference genome file into a subdirectory of /home/bwa_user/bwa_indexed
 named for a specific build, and then indexes the fasta file with bwa and samtools.  To save space
