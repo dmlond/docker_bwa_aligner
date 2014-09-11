@@ -1,6 +1,6 @@
 #!/bin/bash
 # run with sudo if not on mac with boot2docker
-docker run dmlond/split_raw
+docker pull dmlond/split_raw
 docker tag dmlond/split_raw dmlond/google_agent_candidate
 docker build -t dmlond/google_split_agent_candidate google_agent_base
 docker build -t dmlond/split_agent split_agent
