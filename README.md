@@ -27,7 +27,7 @@ step discussed below.  If you do not build the containers manually, the docker s
 from the public Dockerhub repositories mentioned below (mac osx users with boot2docker do not need sudo).
 
 ```bash
-sudo docker run -–name bwa_references dmlond/bwa_reference_volume
+sudo docker run --name bwa_references dmlond/bwa_reference_volume
 sudo docker run -i -–volumes-from bwa_references dmlond/bwa_reference -i pf3D7_v2.1.5 ftp://ftp.sanger.ac.uk/pub/project/pathogens/Plasmodium/falciparum/3D7/3D7.version2.1.5/Pf3D7_v2.1.5.fasta -z
 sudo docker run –-name plasmodium_data dmlond/bwa_plasmodium_data
 ID=`sudo docker run -d --volumes-from bwa_references --volumes-from plasmodium_data dmlond/bwa_aligner -s ERR022523_1.fastq.gz -b pf3D7_v2.1.5 -R Pf3D7_v2.1.5.fasta.gz -p ERR022523_2.fastq.gz -o ERR022523_1_2.bam`
