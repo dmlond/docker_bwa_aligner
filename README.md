@@ -28,8 +28,8 @@ from the public Dockerhub repositories mentioned below (mac osx users with boot2
 
 ```bash
 sudo docker run --name bwa_references dmlond/bwa_reference_volume
-sudo docker run -i -–volumes-from bwa_references dmlond/bwa_reference -i pf3D7_v2.1.5 ftp://ftp.sanger.ac.uk/pub/project/pathogens/Plasmodium/falciparum/3D7/3D7.version2.1.5/Pf3D7_v2.1.5.fasta -z
-sudo docker run –-name plasmodium_data dmlond/bwa_plasmodium_data
+sudo docker run -i --volumes-from bwa_references dmlond/bwa_reference -i pf3D7_v2.1.5 ftp://ftp.sanger.ac.uk/pub/project/pathogens/Plasmodium/falciparum/3D7/3D7.version2.1.5/Pf3D7_v2.1.5.fasta -z
+sudo docker run --name plasmodium_data dmlond/bwa_plasmodium_data
 ID=`sudo docker run -d --volumes-from bwa_references --volumes-from plasmodium_data dmlond/bwa_aligner -s ERR022523_1.fastq.gz -b pf3D7_v2.1.5 -R Pf3D7_v2.1.5.fasta.gz -p ERR022523_2.fastq.gz -o ERR022523_1_2.bam`
 ```
 The above will run for a few minutes.  You can monitor it using docker inspect on the ID (or at least the first few numbers of the ID as given in the output of docker ps).
@@ -45,7 +45,7 @@ sudo docker logs $ID
 If the job finised successfully, you can pull the data to your host.
 ```bash
 mkdir ~/archive
-sudo docker run –-rm --volumes-from plasmodium_data -v /home/${USER}:/archive dmlond/bwa_samtools_base cp /home/bwa_user/data/ERR022523_1.fastq.gz.bam /archive/
+sudo docker run --rm --volumes-from plasmodium_data -v /home/${USER}:/archive dmlond/bwa_samtools_base cp /home/bwa_user/data/ERR022523_1.fastq.gz.bam /archive/
 ```
 
 *Note, The above assumes you are running on a *nix host.  This is more challenging on Mac OSX due to the intervening boot2docker host, which requires that you first use standard ssh to access the boot2docker host to make the ~/archive directory, run the above, and then fetch (scp, rsync, etc) the ~/archive directory from the boot2docker host machine using standard ssh access.  Users familiar with virtualbox can find a way to modify the boot2docker image to mount local directories, but this is beyond the scope of this example.
