@@ -37,9 +37,9 @@ The above will run for a few minutes.  You can monitor it using docker inspect o
 sudo docker inspect $ID
 ```
 
-If 'Running' is false, the job is done.  If 'ExitCode' is 0 it finished successfully, otherwise it finished with an error.  Either way, you can use docker logs to see the output from STDOUT and STDERR
+If 'Running' is false, the job is done.  If 'ExitCode' is 0 it finished successfully, otherwise it finished with an error.  Either way, you can use docker logs (logs -f attaches and follows, leave off if you just want to get a snapshot) to see the output from STDOUT and STDERR
 ```bash
-sudo docker logs $ID
+sudo docker logs -f $ID
 ```
 
 If the job finised successfully, you can pull the data to your host.
@@ -64,7 +64,7 @@ run the following commands (mac osx users with boot2docker do not need sudo):
 
 ```bash
 sudo docker build -t dmlond/bwa_samtools_base docker_bwa_aligner/bwa_samtools_base
-sudo docker build -t  dmlond/bwa_plasmodium_data docker_bwa_aligner/bwa_plasmodium_data
+sudo docker build -t dmlond/bwa_plasmodium_data docker_bwa_aligner/bwa_plasmodium_data
 sudo docker build -t dmlond/bwa_reference_volume docker_bwa_aligner/bwa_reference_volume
 sudo docker build -t dmlond/bwa_reference docker_bwa_aligner/bwa_reference
 sudo docker build -t dmlond/split_raw docker_bwa_aligner/split_raw
