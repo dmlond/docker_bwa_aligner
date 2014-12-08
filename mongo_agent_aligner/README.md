@@ -45,3 +45,9 @@ irb> exit
 container> exit
 $
 ```
+
+If you are on a docker host with capacity for multiple align_subset agents to run simultaneously:
+
+```bash
+$ fig scale refvol=1 datavol=1 plasref=1 mongodb=1 alignment=1 splitraw=1 alignsubset=5 mergebam=1 mergemonitor=1
+```
