@@ -28,7 +28,7 @@ irb> a.db[a.queue].insert({
   ready:true
 })
 # you can monitor the process using these commonds
-irb> a.db(a.queue).find.count
+irb> a.db[a.queue].find.count
 #  repeat a few times to see how the overall tasks in the queue build up
 # monitor the alignment task until it is complete without errors (hopefully)
 irb> a.get_tasks({agent_name: 'alignment_agent'}).count
