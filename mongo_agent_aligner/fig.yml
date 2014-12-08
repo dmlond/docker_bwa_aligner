@@ -1,0 +1,82 @@
+refvol:
+  image: dmlond/bwa_reference_volume
+datavol:
+  image: dmlond/bwa_plasmodium_data
+plasref:
+  image: dmlond/bwa_reference
+  command: -i pf3D7_v2.1.5 ftp://ftp.sanger.ac.uk/pub/project/pathogens/Plasmodium/falciparum/3D7/3D7.version2.1.5/Pf3D7_v2.1.5.fasta -z
+  volumes_from:
+    - refvol
+mongodb:
+  image: mongo:latest
+  command: mongod --smallfiles
+alignment:
+  image: dmlond/mongo_agent_alignment
+  command: /usr/local/bin/alignment_agent.rb
+  user: bwa_user
+  working_dir: /home/bwa_user
+  environment:
+    MONGO_HOST: mongodb
+    MONGO_DB: agents
+    QUEUE: test
+  links:
+    - mongodb:mongodb
+  volumes_from:
+    - refvol
+    - datavol
+splitraw:
+  image: dmlond/mongo_agent_split_raw
+  command: /usr/local/bin/split_agent.rb
+  user: bwa_user
+  working_dir: /home/bwa_user
+  environment:
+    MONGO_HOST: mongodb
+    MONGO_DB: agents
+    QUEUE: test
+  links:
+    - mongodb:mongodb
+  volumes_from:
+    - refvol
+    - datavol
+alignsubset:
+  image: dmlond/mongo_agent_align_subset
+  command: /usr/local/bin/align_subset_agent.rb
+  user: bwa_user
+  working_dir: /home/bwa_user
+  environment:
+    MONGO_HOST: mongodb
+    MONGO_DB: agents
+    QUEUE: test
+  links:
+    - mongodb:mongodb
+  volumes_from:
+    - refvol
+    - datavol
+mergebam:
+  image: dmlond/mongo_agent_merge_bam
+  command: /usr/local/bin/merge_bam_agent.rb
+  user: bwa_user
+  working_dir: /home/bwa_user
+  environment:
+    MONGO_HOST: mongodb
+    MONGO_DB: agents
+    QUEUE: test
+  links:
+    - mongodb:mongodb
+  volumes_from:
+    - refvol
+    - datavol
+mergemonitor:
+  image: dmlond/mongo_agent_merge_monitor
+  command: /usr/local/bin/merge_monitor.rb
+  user: bwa_user
+  working_dir: /home/bwa_user
+  environment:
+    MONGO_HOST: mongodb
+    MONGO_DB: agents
+    QUEUE: test
+  links:
+    - mongodb:mongodb
+  volumes_from:
+    - refvol
+    - datavol

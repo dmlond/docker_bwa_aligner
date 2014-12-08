@@ -25,3 +25,18 @@
 [submodule "bwa_samtools_base"]
 	path = bwa_samtools_base
 	url = git@github.com:dmlond/bwa_samtools_base.git
+[submodule "mongo_agent_aligner/mongo_agent_alignment"]
+	path = mongo_agent_aligner/mongo_agent_alignment
+	url = git@github.com:dmlond/mongo_agent_alignment.git
+[submodule "mongo_agent_aligner/mongo_agent_split_raw"]
+	path = mongo_agent_aligner/mongo_agent_split_raw
+	url = git@github.com:dmlond/mongo_agent_split_raw.git
+[submodule "mongo_agent_aligner/mongo_agent_align_subset"]
+	path = mongo_agent_aligner/mongo_agent_align_subset
+	url = git@github.com:dmlond/mongo_agent_align_subset.git
+[submodule "mongo_agent_aligner/mongo_agent_merge_bam"]
+	path = mongo_agent_aligner/mongo_agent_merge_bam
+	url = git@github.com:dmlond/mongo_agent_merge_bam.git
+[submodule "mongo_agent_aligner/mongo_agent_merge_monitor"]
+	path = mongo_agent_aligner/mongo_agent_merge_monitor
+	url = git@github.com:dmlond/mongo_agent_merge_monitor.git
