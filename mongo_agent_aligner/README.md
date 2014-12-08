@@ -18,6 +18,7 @@ $ docker ps | grep dmlond/mongo_agent_alignment
 # copy the Docker Container ID
 $ docker exec -ti $CONTAINERID /bin/bash
 container> irb
+irb> require 'mongo_agent'
 irb> a = MongoAgent::Agent.new({name: 'alignment_agent', queue: ENV["QUEUE"]})
 irb> a.db[a.queue].insert({
   build: 'pf3D7_v2.1.5',
