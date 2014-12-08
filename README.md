@@ -1,6 +1,8 @@
 docker_bwa_aligner
 ==================
 
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.12471.png)](http://dx.doi.org/10.5281/zenodo.12471)
+
 This is a proof of concept docker container based system to run a simple sequence alignment workflow.
 The basic parts of this system are:
 
