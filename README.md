@@ -61,8 +61,6 @@ bash-4.1# exit
 $ ls output
 ```
 
-*Note, The above assumes you are running on a *nix host.  This is more challenging on Mac OSX due to the intervening boot2docker host, which requires that you first use standard ssh to access the boot2docker host to make the ~/archive directory, run the above, and then fetch (scp, rsync, etc) the ~/archive directory from the boot2docker host machine using standard ssh access.  Users familiar with virtualbox can find a way to modify the boot2docker image to mount local directories, but this is beyond the scope of this example.
-
 You can run dmlond/split_raw, dmlond/bwa_reference and dmlond/bwa_aligner containers without arguments (or mounted volumes) to get a list of requirements
 
 ```bash
