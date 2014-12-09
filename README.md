@@ -49,6 +49,17 @@ If the job finised successfully, you can pull the data to your host.
 mkdir ~/archive
 sudo docker run --rm --volumes-from plasmodium_data -v /home/${USER}:/archive dmlond/bwa_samtools_base cp /home/bwa_user/data/ERR022523_1.fastq.gz.bam /archive/
 ```
+or just use [fig](http://www.fig.sh/)
+```bash
+$ fig up refvol
+$ fig up datavol
+$ fig up plasref
+$ fig up aligner
+$ fig run --rm collector /bin/bash
+bash-4.1# cp data/ERR022523_1_2.bam /output
+bash-4.1# exit
+$ ls output
+```
 
 *Note, The above assumes you are running on a *nix host.  This is more challenging on Mac OSX due to the intervening boot2docker host, which requires that you first use standard ssh to access the boot2docker host to make the ~/archive directory, run the above, and then fetch (scp, rsync, etc) the ~/archive directory from the boot2docker host machine using standard ssh access.  Users familiar with virtualbox can find a way to modify the boot2docker image to mount local directories, but this is beyond the scope of this example.
 
@@ -129,4 +140,3 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-

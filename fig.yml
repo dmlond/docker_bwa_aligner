@@ -1,0 +1,23 @@
+refvol:
+  image: dmlond/bwa_reference_volume
+datavol:
+  image: dmlond/bwa_plasmodium_data
+plasref:
+  image: dmlond/bwa_reference
+  command: -i pf3D7_v2.1.5 ftp://ftp.sanger.ac.uk/pub/project/pathogens/Plasmodium/falciparum/3D7/3D7.version2.1.5/Pf3D7_v2.1.5.fasta -z
+  volumes_from:
+    - refvol
+aligner:
+  image: dmlond/bwa_aligner
+  command: -s ERR022523_1.fastq.gz -b pf3D7_v2.1.5 -R Pf3D7_v2.1.5.fasta.gz -p ERR022523_2.fastq.gz -o ERR022523_1_2.bam
+  volumes_from:
+    - refvol
+    - datavol
+collector:
+  image: dmlond/bwa_samtools_base
+  working_dir: /home/bwa_user
+  volumes_from:
+    - refvol
+    - datavol
+  volumes:
+    - ./output:/output
