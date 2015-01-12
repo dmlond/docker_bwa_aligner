@@ -2,52 +2,67 @@ MongoAgent Implementation
 =========================
 
 This is an implementation of the [docker_bwa_alignment](https://github.com/dmlond/docker_bwa_aligner).
-It uses [fig.sh](http://www.fig.sh/) to create the agents and monitor linked to
-the bwa_plasmodium_data and bwa_reference_volume volumes, and a mongodb. It
-adds the specific Plasmodium reference dataset that the plasmodium_data is
-aligned against.  It also encodes the required Environment variables needed
-to tie them all together using the same mongodb container into MongoAgents.
+It uses [crane](https://github.com/michaelsauter/crane) to make running the pipeline
+easier.
+
+It consists of four agents to perform different parts of the pipeline:
+  - [mongo_agent_alignment](https://github.com/dmlond/mongo_agent_alignment)
+  - [mongo_agent_split_raw](https://github.com/dmlond/mongo_agent_split_raw)
+  - [mongo_agent_align_subset](https://github.com/dmlond/mongo_agent_align_subset)
+  - [mongo_agent_merge_bam](https://github.com/dmlond/mongo_agent_merge_bam)
+
+It also consists of [mongo_agent_merge_monitor](https://github.com/dmlond/mongo_agent_merge_monitor)
+to monitor the align_subset jobs for each alignment, and create new merge_bam
+jobs when they all complete without errors.
+
+There are two seed tasks that need to be run which download the raw and reference
+files and insert/update the mongodb alignment task for the demo alignment:
+  - [mongo_agent_seed_alignment](https://github.com/dmlond/mongo_agent_seed_alignment)
+  - [mongo_agent_seed_reference](https://github.com/dmlond/mongo_agent_seed_reference)
+
+Finally, there is the [mongo_agent_watch_alignment](https://github.com/dmlond/mongo_agent_watch_alignment)
+application which can be run to watch the progress of the alignment by continuously querying the mongodb
+to find information about tasks for the four agents.
 
 ---Run the analysis
-
-```bash
-$ fig up -d
-# wait about 3-5 minutes, use fig logs plasref and fig logs datavol to ensure the
-# references and data are downloaded
-$ docker ps | grep dmlond/mongo_agent_alignment
-# copy the Docker Container ID
-$ docker exec -ti $CONTAINERID /bin/bash
-container> irb
-irb> require 'mongo_agent'
-irb> a = MongoAgent::Agent.new({name: 'alignment_agent', queue: ENV["QUEUE"]})
-irb> a.db[a.queue].insert({
-  build: 'pf3D7_v2.1.5',
-  reference: 'Pf3D7_v2.1.5.fasta.gz',
-  raw_file: 'ERR022523_1.fastq.gz',
-  agent_name: 'alignment_agent',
-  ready:true
-})
-# you can monitor the process using these commonds
-irb> a.db[a.queue].find.count
-#  repeat a few times to see how the overall tasks in the queue build up
-# monitor the alignment task until it is complete without errors (hopefully)
-irb> a.get_tasks({agent_name: 'alignment_agent'}).count
-irb> a.get_tasks({agent_name: 'alignment_agent', complete: true}).count
-irb> a.get_tasks({agent_name: 'alignment_agent', complete: true, error_encountered: false}).count
-# monitor the split_agent task until it is complete without errors
-irb> a.get_tasks({agent_name: 'split_agent'}).count
-irb> a.get_tasks({agent_name: 'split_agent', complete: true}).count
-irb> a.get_tasks({agent_name: 'split_agent', complete: true, error_encountered: false}).count
-### do the same with align_subset_agent, then merge_bam_agent
-# see the information produced by the merge_agent (you can look at the others as well)
-irb> a.get_tasks({agent_name: 'merge_bam_agent', complete: true}).first
-irb> exit
-container> exit
-$
+Make a data directory in the same directory as this README.md file
+```
+$ mkdir data
 ```
 
-If you are on a docker host with capacity for multiple align_subset agents to run simultaneously:
-
+Then run:
 ```bash
-$ fig scale refvol=1 datavol=1 plasref=1 mongodb=1 alignment=1 splitraw=1 alignsubset=5 mergebam=1 mergemonitor=1
+$ crane lift
+$ crane logs -f watcher
 ```
+
+one can run just the seeds:
+```bash
+$ crane run seeds
+```
+
+or agents:
+```
+$ crane run agents
+```
+
+or run an individual part of the pipeline based on their keys in crane.yml
+under the containers: heading.
+```
+$ crane run alignment
+```
+
+to clean up after your run:
+```
+$ crane stop
+$ crane rm
+```
+
+you can monitor the downloads with (note, if you add -f it
+will continue to follow the log until you hit crtl-c, without it
+it just prints the last few lines and exits):
+```bash
+$ crane logs seedraw
+$ crane logs seedref
+```
+See the crane documentation for more details
