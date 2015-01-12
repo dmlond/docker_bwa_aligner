@@ -1,0 +1,83 @@
+containers:
+  mongodb:
+    image: mongo:latest
+    run:
+      entrypoint: mongod
+      cmd: --smallfiles
+      detach: true
+  refvol:
+    image: dmlond/bwa_reference_volume
+    run:
+      detach: true
+    rm:
+      volumes: true
+  seedref:
+    dockerfile: mongo_agent_seed_reference
+    image: dmlond/mongo_agent_seed_reference
+    run:
+      detach: true
+      env: ["MONGO_HOST=mongodb","MONGO_DB=agents","QUEUE=test"]
+      link: ["mongodb:mongodb"]
+      volumes-from: ["refvol"]
+    rm:
+      volumes: true
+  seedraw:
+    dockerfile: mongo_agent_seed_alignment
+    image: dmlond/mongo_agent_seed_alignment
+    run:
+      detach: true
+      env: ["MONGO_HOST=mongodb","MONGO_DB=agents","QUEUE=test"]
+      link: ["mongodb:mongodb"]
+      volume: ["./data:/home/bwa_user/data"]
+    rm:
+      volumes: true
+  alignment:
+    dockerfile: mongo_agent_alignment
+    image: dmlond/mongo_agent_alignment
+    run:
+      detach: true
+      env: ["MONGO_HOST=mongodb","MONGO_DB=agents","QUEUE=test"]
+      link: ["mongodb:mongodb"]
+      volumes-from: ["refvol","seedraw"]
+  splitraw:
+    dockerfile: mongo_agent_split_raw
+    image: dmlond/mongo_agent_split_raw
+    run:
+      detach: true
+      env: ["MONGO_HOST=mongodb","MONGO_DB=agents","QUEUE=test"]
+      link: ["mongodb:mongodb"]
+      volumes-from: ["refvol","seedraw"]
+  alignsubset:
+    dockerfile: mongo_agent_align_subset
+    image: dmlond/mongo_agent_align_subset
+    run:
+      detach: true
+      env: ["MONGO_HOST=mongodb","MONGO_DB=agents","QUEUE=test"]
+      link: ["mongodb:mongodb"]
+      volumes-from: ["refvol","seedraw"]
+  mergebam:
+    dockerfile: mongo_agent_merge_bam
+    image: dmlond/mongo_agent_merge_bam
+    run:
+      detach: true
+      env: ["MONGO_HOST=mongodb","MONGO_DB=agents","QUEUE=test"]
+      link: ["mongodb:mongodb"]
+      volumes-from: ["refvol","seedraw"]
+  mergemonitor:
+    dockerfile: mongo_agent_merge_monitor
+    image: dmlond/mongo_agent_merge_monitor
+    run:
+      detach: true
+      env: ["MONGO_HOST=mongodb","MONGO_DB=agents","QUEUE=test"]
+      link: ["mongodb:mongodb"]
+      volumes-from: ["refvol","seedraw"]
+  watcher:
+    dockerfile: mongo_agent_watch_alignment
+    image: dmlond/mongo_agent_watch_alignment
+    run:
+      detach: true
+      env: ["MONGO_HOST=mongodb","MONGO_DB=agents","QUEUE=test"]
+      link: ["mongodb:mongodb"]
+groups:
+  seeds: ["refvol","seedref", "seedraw"]
+  agents: ["alignment","splitraw","alignsubset","mergebam","mergemonitor"]

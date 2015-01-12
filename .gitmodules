@@ -40,3 +40,12 @@
 [submodule "mongo_agent_aligner/mongo_agent_merge_monitor"]
 	path = mongo_agent_aligner/mongo_agent_merge_monitor
 	url = git@github.com:dmlond/mongo_agent_merge_monitor.git
+[submodule "mongo_agent_aligner/mongo_agent_seed_alignment"]
+	path = mongo_agent_aligner/mongo_agent_seed_alignment
+	url = https://github.com/dmlond/mongo_agent_seed_alignment.git
+[submodule "mongo_agent_aligner/mongo_agent_watch_alignment"]
+	path = mongo_agent_aligner/mongo_agent_watch_alignment
+	url = https://github.com/dmlond/mongo_agent_watch_alignment.git
+[submodule "mongo_agent_aligner/mongo_agent_seed_reference"]
+	path = mongo_agent_aligner/mongo_agent_seed_reference
+	url = https://github.com/dmlond/mongo_agent_seed_reference.git
