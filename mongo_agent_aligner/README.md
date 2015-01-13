@@ -6,21 +6,21 @@ It uses [crane](https://github.com/michaelsauter/crane) to make running the pipe
 easier.
 
 It consists of four agents to perform different parts of the pipeline:
-  - [mongo_agent_alignment](https://github.com/dmlond/mongo_agent_alignment)
-  - [mongo_agent_split_raw](https://github.com/dmlond/mongo_agent_split_raw)
-  - [mongo_agent_align_subset](https://github.com/dmlond/mongo_agent_align_subset)
-  - [mongo_agent_merge_bam](https://github.com/dmlond/mongo_agent_merge_bam)
+  - mongo_agent_alignment [github](https://github.com/dmlond/mongo_agent_alignment) [docker hub](https://registry.hub.docker.com/u/dmlond/mongo_agent_alignment)
+  - mongo_agent_split_raw [github](https://github.com/dmlond/mongo_agent_split_raw) [docker hub](https://registry.hub.docker.com/u/dmlond/mongo_agent_split_raw)
+  - mongo_agent_align_subset [github](https://github.com/dmlond/mongo_agent_align_subset) [docker hub](https://registry.hub.docker.com/u/dmlond/mongo_agent_align_subset)
+  - mongo_agent_merge_bam [github](https://github.com/dmlond/mongo_agent_merge_bam) [docker hub](https://registry.hub.docker.com/u/dmlond/mongo_agent_merge_bam)
 
-It also consists of [mongo_agent_merge_monitor](https://github.com/dmlond/mongo_agent_merge_monitor)
+It also consists of mongo_agent_merge_monitor [github](https://github.com/dmlond/mongo_agent_merge_monitor) [docker hub](https://registry.hub.docker.com/u/dmlond/mongo_agent_merge_monitor)
 to monitor the align_subset jobs for each alignment, and create new merge_bam
 jobs when they all complete without errors.
 
 There are two seed tasks that need to be run which download the raw and reference
 files and insert/update the mongodb alignment task for the demo alignment:
-  - [mongo_agent_seed_alignment](https://github.com/dmlond/mongo_agent_seed_alignment)
-  - [mongo_agent_seed_reference](https://github.com/dmlond/mongo_agent_seed_reference)
+  - mongo_agent_seed_alignment [github](https://github.com/dmlond/mongo_agent_seed_alignment) [docker hub](https://registry.hub.docker.com/u/dmlond/mongo_agent_seed_alignment)
+  - mongo_agent_seed_reference [github](https://github.com/dmlond/mongo_agent_seed_reference) [docker hub](https://registry.hub.docker.com/u/dmlond/mongo_agent_seed_reference)
 
-Finally, there is the [mongo_agent_watch_alignment](https://github.com/dmlond/mongo_agent_watch_alignment)
+Finally, there is the mongo_agent_watch_alignment [github](https://github.com/dmlond/mongo_agent_watch_alignment) [docker hub](https://registry.hub.docker.com/u/dmlond/mongo_agent_watch_alignment)
 application which can be run to watch the progress of the alignment by continuously querying the mongodb
 to find information about tasks for the four agents.
 
